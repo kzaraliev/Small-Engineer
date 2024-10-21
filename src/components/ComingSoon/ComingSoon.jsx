@@ -9,7 +9,7 @@ export default function ComingSoon() {
     <Container className={styles.comingSoonContainer}>
       <h1>Малък инженер</h1>
       <h2>Скоро ще стартираме!</h2>
-      <p>Благодарим ви, че проявявате интерес!</p>
+      <p>Благодарим, че проявявате интерес!</p>
       <img
         src={comingSoonImage}
         alt="Coming Soon"
