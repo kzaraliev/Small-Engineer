@@ -1,0 +1,20 @@
+/* style={{
+    minHeight: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }} */
+
+.comingSoonContainer {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+  margin-left: 64px;
+  margin-right: 64px;
+}
+
+img {
+  max-width: 50%;
+}
