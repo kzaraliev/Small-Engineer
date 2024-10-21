@@ -1,0 +1,58 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v4
+    - name: Install NodeJS
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Install dependencies
+      run: npm install
+    - name: Build Project
+      run: npm run build
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+      deployments: write
+    name: Publish to Cloudflare Pages
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Build Project
+        run: npm run build 
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: d31bf649a8313bf5400f64037ff2eecb
+          projectName: small-engineer
+          directory: dist
